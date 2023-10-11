@@ -24,4 +24,25 @@ class UserController {
             // Gérer les erreurs ici (par exemple, enregistrer dans un journal ou afficher un message d'erreur à l'utilisateur).
         }
     }
+
+    public function connexionUser($email, $userPassword) {
+        try {
+            $stt = $this->db->prepare("SELECT password_hash FROM `users` WHERE `login` = ?");
+            $stt->bindParam(1, $email);
+            $stt->execute();
+
+            $dbhash = null;
+            if ($stt->rowCount() === 1) {
+                $dbhash = $stt->fetch()['password_hash'];
+            }
+
+            if (password_verify($userPassword, $dbhash)) {
+                return true; // L'authentification est réussie
+            }
+        } catch (PDOException $e) {
+            // Gérer les erreurs ici (par exemple, enregistrer dans un journal ou afficher un message d'erreur à l'utilisateur).
+        }
+
+        return false; // L'authentification a échoué
+    }
 }

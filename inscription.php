@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 
 <body>
-    <form action="user.php" method="post">
+    <form action="" method="post">
         <div>
             <label for="user_email">Email</label>
             <input type="email" name="email" id="user_email">
